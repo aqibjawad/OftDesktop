@@ -1,0 +1,190 @@
+body {
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Form styling */
+.form-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Card styling */
+.vendor-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vendor-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.vendor-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.vendor-card .vendor-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #212529;
+    margin: 0;
+}
+
+.vendor-card .action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.vendor-card .action-buttons .btn {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+.vendor-card .info-row {
+    display: flex;
+    margin-bottom: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.vendor-card .info-row:last-child {
+    border-bottom: none;
+}
+
+.vendor-card .info-label {
+    width: 120px;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.vendor-card .info-value {
+    flex: 1;
+    color: #212529;
+}
+
+.vendor-card .description-box {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 12px;
+}
+
+.vendor-card .description-text {
+    color: #495057;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Button styling */
+.btn-view {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-view:hover {
+    background-color: #218838;
+    color: white;
+}
+
+/* Back button styling */
+.btn-outline-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-primary:hover {
+    transform: translateX(-2px);
+}
+
+.btn-outline-primary svg {
+    margin-top: -2px;
+}
+
+/* Modal styling */
+.modal-content {
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 8px 8px 0 0;
+}
+
+.modal-title {
+    font-weight: 600;
+    color: #212529;
+}
+
+.modal-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    border-radius: 0 0 8px 8px;
+}
+
+/* Loading spinner */
+#loadingSpinner {
+    margin: 100px auto;
+}
+
+/* Empty state */
+#emptyState {
+    padding: 60px 20px;
+}
+
+#emptyState h4 {
+    color: #343a40;
+    margin-bottom: 10px;
+}
+
+#emptyState p {
+    color: #6c757d;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .vendor-card .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .vendor-card .action-buttons {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .vendor-card .info-row {
+        flex-direction: column;
+    }
+    
+    .vendor-card .info-label {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+}

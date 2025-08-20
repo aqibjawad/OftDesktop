@@ -1,0 +1,40 @@
+/* Expense Screen Styles */
+.expense-container {
+    max-width: 1200px;
+    margin: 40px auto 0 auto;
+    padding: 24px 32px;
+}
+
+.expense-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.expense-form select,
+.expense-form input,
+.expense-form textarea {
+    flex: 1 1 160px;
+}
+
+.expense-form textarea {
+    min-width: 120px;
+    max-width: 240px;
+    min-height: 32px;
+    resize: vertical;
+}
+
+.category-summary {
+    background-color: #f8f9fa;
+    font-weight: 500;
+}
+
+@media (max-width: 600px) {
+    .expense-container {
+        padding: 10px 4px;
+    }
+    .expense-form {
+        flex-direction: column;
+    }
+}

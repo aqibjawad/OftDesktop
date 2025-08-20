@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./home.css">
+</head>
+<body>
+    <div class="titlebar">
+        <div class="titlebar-text">Dashboard</div>
+        <div class="window-controls">
+            <button class="window-control" id="minimize-btn">─</button>
+            <button class="window-control" id="maximize-btn">□</button>
+            <button class="window-control" id="close-btn">✕</button>
+        </div>
+    </div>
+
+    <div id="loading" class="center-container">
+        <p>Loading...</p>
+    </div>
+
+    <div id="content" style="display: none;">
+        <header>
+            <h1>Dashboard</h1>
+            <div id="error" class="error-text" style="display: none;"></div>
+            <div class="stats-container">
+                <div class="stat-card received-card">
+                    <h2>Received</h2>
+                    <p id="received-amount">Rs. 0</p>
+                </div>
+                <div class="stat-card paid-card">
+                    <h2>Paid</h2>
+                    <p id="paid-amount">Rs. 0</p>
+                </div>
+                <div class="stat-card expenses-card">
+                    <h2>Expenses</h2>
+                    <p id="total-expenses">Rs. 0</p>
+                </div>
+                <div class="stat-card salary-card">
+                    <h2>Salaries</h2>
+                    <p id="total-salaries">Rs. 0</p>
+                </div>
+                <div class="stat-card balance-card">
+                    <h2>Stock</h2>
+                    <p id="total-quantity">0 kg</p>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div id="cards-container" class="cards-container">
+                <!-- Cards will be dynamically inserted here -->
+            </div>
+        </main>
+
+        <footer>
+            <p id="balance-text" class="balance-text">Balance: Rs. 0</p>
+        </footer>
+    </div>
+
+    <script src="./home.js"></script>
+</body>
+</html>

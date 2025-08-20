@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sales Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="sales.css">
+</head>
+<body>
+    <div class="container-fluid mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-outline-primary" id="backToHome">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                    Back to Home
+                </button>
+                <h2 class="mb-0">Sales Management</h2>
+            </div>
+            <button class="btn btn-primary" id="addSaleBtn">
+                + Add Sale
+            </button>
+        </div>
+
+        <!-- Sales Table -->
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Sales Records</h5>
+                    <div class="d-flex gap-3 align-items-center">
+                        <div class="form-group">
+                            <label for="fromDate" class="form-label">From:</label>
+                            <input type="date" class="form-control" id="fromDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="toDate" class="form-label">To:</label>
+                            <input type="date" class="form-control" id="toDate">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Empty State -->
+                <div id="emptyState" class="text-center py-5">
+                    <h4 class="text-muted">No sales found</h4>
+                    <p class="text-muted mb-0">Click the Add Sale button to get started.</p>
+                </div>
+
+                <!-- Table Container -->
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Product</th>
+                                <th>Quantity (kg)</th>
+                                <th>Price/kg</th>
+                                <th>Total Price</th>
+                                <th>Packing</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sale Form Modal -->
+        <div class="modal fade" id="saleModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Record New Sale</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="saleForm" class="needs-validation" novalidate>
+                            <div class="mb-3">
+                                <label for="client" class="form-label">Select Client *</label>
+                                <select class="form-select" id="client" required>
+                                    <option value="">Select a client</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a client</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="product" class="form-label">Select Product *</label>
+                                <select class="form-select" id="product" required>
+                                    <option value="">Select a product</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a product</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Product Type *</label>
+                                <div class="d-flex gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="productType" id="typeLoose" value="loose" checked>
+                                        <label class="form-check-label" for="typeLoose">Loose</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="productType" id="typeReady" value="ready">
+                                        <label class="form-check-label" for="typeReady">Ready</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="looseQuantitySection" class="mb-3">
+                                <label for="quantity" class="form-label">Quantity (kg) *</label>
+                                <input type="number" class="form-control" id="quantity" step="0.1" min="0" required>
+                                <div class="invalid-feedback">Please enter a valid quantity</div>
+                            </div>
+
+                            <div id="readyQuantitySection" class="mb-3 d-none">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="pieces" class="form-label">Pieces *</label>
+                                        <input type="number" class="form-control" id="pieces" step="1" min="0" required>
+                                        <div class="invalid-feedback">Please enter number of pieces</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="gramsPerPiece" class="form-label">Grams per Piece *</label>
+                                        <input type="number" class="form-control" id="gramsPerPiece" step="0.1" min="0" required>
+                                        <div class="invalid-feedback">Please enter grams per piece</div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="ratePerGram" class="form-label">Rate per Gram *</label>
+                                        <input type="number" class="form-control" id="ratePerGram" step="0.01" min="0" required>
+                                        <div class="invalid-feedback">Please enter rate per gram</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="packingCost" class="form-label">Packing Cost</label>
+                                        <input type="number" class="form-control" id="packingCost" step="0.01" min="0" value="0">
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="dozensPerBox" class="form-label">Dozens per Box *</label>
+                                        <input type="number" class="form-control" id="dozensPerBox" step="1" min="0" required>
+                                        <div class="invalid-feedback">Please enter dozens per box</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="totalBoxes" class="form-label">Total Boxes *</label>
+                                        <input type="number" class="form-control" id="totalBoxes" step="1" min="0" required>
+                                        <div class="invalid-feedback">Please enter total boxes</div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-4">
+                                        <label for="weightValue" class="form-label">Weight Value</label>
+                                        <input type="number" class="form-control" id="weightValue" readonly>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="perDozen" class="form-label">Per Dozen</label>
+                                        <input type="number" class="form-control" id="perDozen" readonly>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="boxPrice" class="form-label">Box Price</label>
+                                        <input type="number" class="form-control" id="boxPrice" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Ready Price Section -->
+                            <div id="readyPriceSection" class="mb-3 d-none">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="dozenQuantity" class="form-label">Dozen Quantity *</label>
+                                        <input type="number" class="form-control" id="dozenQuantity" step="0.1" min="0" required>
+                                        <div class="invalid-feedback">Please enter dozen quantity</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="gramsPerDozen" class="form-label">Grams per Dozen</label>
+                                        <input type="number" class="form-control" id="gramsPerDozen" value="300" readonly>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="pricePerGram" class="form-label">Price per Gram *</label>
+                                        <input type="number" class="form-control" id="pricePerGram" step="0.01" min="0" required>
+                                        <div class="invalid-feedback">Please enter price per gram</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="pricePerCarton" class="form-label">Price per Carton *</label>
+                                        <input type="number" class="form-control" id="pricePerCarton" step="0.01" min="0" required>
+                                        <div class="invalid-feedback">Please enter price per carton</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="loosePriceSection" class="mb-3">
+                                <label for="pricePerKg" class="form-label">Price per kg *</label>
+                                <input type="number" class="form-control" id="pricePerKg" step="0.01" min="0" required>
+                                <div class="invalid-feedback">Please enter a valid price</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="packing" class="form-label">Packing Details</label>
+                                <input type="text" class="form-control" id="packing" placeholder="Enter packing details">
+                            </div>
+                            <div class="total-price-container p-3 bg-light rounded">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Total Price:</span>
+                                    <span class="total-price fw-bold" id="totalPrice">₹ 0.00</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="saveSaleBtn">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="sales.js"></script>
+</body>
+</html>

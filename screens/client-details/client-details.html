@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client Details</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./client-details.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <button class="back-button" onclick="window.location.href='../client/client.html'">
+                <span class="material-icons">arrow_back</span>
+                Back to Clients
+            </button>
+            <h1 id="clientName">Client Details</h1>
+        </div>
+
+        <div class="actions-bar">
+            <div class="date-filters">
+                <div class="form-group">
+                    <label for="startDate">From:</label>
+                    <input type="date" id="startDate" class="date-input">
+                </div>
+                <div class="form-group">
+                    <label for="endDate">To:</label>
+                    <input type="date" id="endDate" class="date-input">
+                </div>
+                <button id="filterBtn" class="filter-button">
+                    <span class="material-icons">filter_alt</span>
+                    Filter
+                </button>
+            </div>
+            <button id="downloadPdfBtn" class="download-button" disabled>
+                <span class="material-icons">picture_as_pdf</span>
+                Download PDF Report
+            </button>
+        </div>
+
+        <div id="loadingContainer" class="loading-container" style="display: none;">
+            <div class="loader"></div>
+            <p>Loading sales data...</p>
+        </div>
+
+        <div id="errorContainer" class="error-container" style="display: none;">
+            <p id="errorText"></p>
+        </div>
+
+        <div id="clientDetails" class="client-details-card" style="display: none;">
+            <div class="details-row">
+                <span class="detail-label">Firm:</span>
+                <span id="firmName" class="detail-value">-</span>
+            </div>
+            <div class="details-row">
+                <span class="detail-label">Contact:</span>
+                <span id="contact" class="detail-value">-</span>
+            </div>
+            <div class="details-row">
+                <span class="detail-label">Total Sales:</span>
+                <span id="totalSales" class="detail-value total-amount">$0.00</span>
+            </div>
+            <div class="details-row">
+                <span class="detail-label">Received:</span>
+                <span id="totalReceived" class="detail-value total-amount">$0.00</span>
+            </div>
+            <div class="details-row">
+                <span class="detail-label">Balance:</span>
+                <span id="remainingBalance" class="detail-value total-amount">$0.00</span>
+            </div>
+        </div>
+
+        <!-- Tabs navigation -->
+        <ul class="nav nav-tabs mt-4" id="clientTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="sales-tab" data-bs-toggle="tab" href="#sales" role="tab">Sales History</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="payments-tab" data-bs-toggle="tab" href="#payments" role="tab">Payment History</a>
+            </li>
+        </ul>
+
+        <!-- Tab content -->
+        <div class="tab-content mt-3">
+            <!-- Sales History Tab -->
+            <div class="tab-pane fade show active" id="sales" role="tabpanel">
+                <div id="salesTableContainer" class="table-container" style="display: none;">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Sale ID</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price/Kg</th>
+                                <th>Total Price</th>
+                                <th>Sale Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salesTableBody">
+                            <!-- Sales data will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Payments History Tab -->
+            <div class="tab-pane fade" id="payments" role="tabpanel">
+                <div class="table-container">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Bank</th>
+                                <th>Amount</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentsTableBody">
+                            <!-- Payments data will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="noDataContainer" class="no-data-container" style="display: none;">
+            <p>No sales data found for this client.</p>
+        </div>
+    </div>
+
+    <!-- Update Sale Modal -->
+    <div class="modal fade" id="updateSaleModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Sale</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateSaleForm">
+                        <input type="hidden" id="saleId">
+                        <div class="mb-3">
+                            <label class="form-label">Product</label>
+                            <select class="form-select" id="productSelect" required>
+                                <!-- Products will be populated here -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Quantity (Kg)</label>
+                            <input type="number" class="form-control" id="quantity" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price per Kg</label>
+                            <input type="number" class="form-control" id="pricePerKg" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Packing</label>
+                            <input type="text" class="form-control" id="packing">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="updateSaleBtn">Update Sale</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="./client-details.js"></script>
+</body>
+</html>
